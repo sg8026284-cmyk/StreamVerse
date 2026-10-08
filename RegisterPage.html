@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create an Account</title>
+    <link rel="stylesheet" href="RegisterPage.css">
+</head>
+<body>
+
+    <div class="registration-container">
+        <h2>Create Account</h2>
+
+        <div id="errorBanner" class="error-banner"></div>
+
+        <form action="RegisterServlet" method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" name="f_name" placeholder="John" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="l_name" placeholder="Doe" required autocomplete="off">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="user_email" placeholder="name@domain.com" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="pwd_1" placeholder="••••••••" required minlength="6">
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="pwd_2" placeholder="••••••••" required minlength="6">
+            </div>
+
+            <button type="submit" class="submit-btn">Initialize Account</button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="LoginPage.html">Log in here</a>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get('error');
+        const banner = document.getElementById('errorBanner');
+        if (error) {
+            banner.style.display = 'block';
+            if (error === 'password_mismatch') banner.innerText = 'Passwords do not match.';
+            else if (error === 'email_exists') banner.innerText = 'Email already registered. Please sign in.';
+            else if (error === 'missing_inputs') banner.innerText = 'Please complete all required fields.';
+            else banner.innerText = 'Registration failed. Check server console.';
+        }
+    </script>
+</body>
+</html>

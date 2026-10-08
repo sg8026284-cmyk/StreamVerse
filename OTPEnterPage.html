@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Access Code</title>
+    <link rel="stylesheet" href="OTPEnterPage.css">
+</head>
+<body>
+
+    <div class="otp-container">
+        <h2>Enter Passcode</h2>
+        <p>A 6-digit confirmation code has been generated. Provide the token to establish your session.</p>
+
+        <div id="errorBanner" class="error-banner"></div>
+
+        <form action="OTPValidationServlet" method="POST">
+            <div class="form-group">
+                <input type="text" name="enteredOTP" maxlength="6" placeholder="000000" pattern="[0-9]{6}" required autofocus autocomplete="one-time-code">
+            </div>
+            <button type="submit" class="submit-btn">Authenticate Code</button>
+        </form>
+
+        <div class="footer-links">
+            Didn't receive code? <a href="RegisterPage.html">Try Again</a>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get('error');
+        const banner = document.getElementById('errorBanner');
+        if (error === 'invalid_otp') {
+            banner.style.display = 'block';
+            banner.innerText = 'Invalid or expired code. Please enter the correct code.';
+        }
+    </script>
+</body>
+</html>
